@@ -23,7 +23,7 @@ use toml;
 use toml::Value;
 
 static PATH: &str = "/home/system/etc/config.toml";
-static IP: &str = "127.0.0.1";
+static IP: &str = "0.0.0.0";
 const PORT: u16 = 8080;
 
 #[derive(Debug, Deserialize)]

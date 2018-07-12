@@ -182,13 +182,13 @@ where
             &self.context,
         ) {
             Ok((val, errs)) => {
-                let errs_msg: String = errs.into_iter()
-                    .map(|x| serde_json::to_string(&x).unwrap())
-                    .collect();
+//                let errs_msg: String = errs.into_iter()
+//                    .map(|x| serde_json::to_string(&x).unwrap())
+//                    .collect();
 
                 json!({
                     "msg": val,
-                    "errs": errs_msg})
+                    "errs": errs})
                     .to_string()
             }
             Err(e) => serde_json::to_string(&e).unwrap(),
