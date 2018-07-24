@@ -42,9 +42,6 @@ impl Database {
     ///
     /// Attempts to connect to sqlite database and will `panic!` if connection fails.
     pub fn new(path: &str) -> Self {
-        if !::std::path::Path::new(path).exists() {
-            println!("Creating database {}", path);
-        }
         Database {
             connection: SqliteConnection::establish(&String::from(path)).expect(&format!(
                 "Could not create SQLite database connection to: {}",
@@ -68,9 +65,8 @@ impl Database {
         )).get_result::<bool>(&self.connection)
         {
             Err(err) => panic!("Error querying table: {:?}", err),
-            Ok(true) => println!("Table exists"),
+            Ok(true) => {},
             Ok(false) => {
-                println!("Telemetry table not found. Creating table.");
                 match sql_query(
                     "CREATE TABLE telemetry (
                     timestamp INTEGER NOT NULL,
@@ -80,7 +76,7 @@ impl Database {
                     PRIMARY KEY (timestamp, subsystem, parameter))",
                 ).execute(&self.connection)
                 {
-                    Ok(_) => println!("Telemetry table created"),
+                    Ok(_) => {},
                     Err(err) => panic!("Error creating table: {:?}", err),
                 }
             }
